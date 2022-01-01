@@ -33,7 +33,7 @@ export class Statement {
   @Column('decimal', { precision: 5, scale: 2 })
   amount: number;
 
-  @Column({ type: 'enum', enum: OperationType })
+  @Column()
   type: OperationType;
 
   @CreateDateColumn()
