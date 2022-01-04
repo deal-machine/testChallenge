@@ -5,18 +5,18 @@ import express from 'express';
 import cors from 'cors';
 
 import connection from './database';
+connection();
+
 import './shared/container';
 import { router } from './routes';
 import { AppError } from './shared/errors/AppError';
 
 const app = express();
 
-connection();
-
 app.use(cors());
 app.use(express.json());
 
-app.use( router);
+app.use('/api/v1', router);
 
 app.use(
   (err: Error, request: express.Request, response: express.Response, _next: express.NextFunction) => {
