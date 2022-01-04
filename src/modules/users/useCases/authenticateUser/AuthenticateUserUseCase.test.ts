@@ -3,6 +3,7 @@ import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { ICreateUserDTO } from "../createUser/ICreateUserDTO";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
+import { IncorrectEmailOrPasswordError } from "./IncorrectEmailOrPasswordError";
 
 let usersRepository: IUsersRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
@@ -35,4 +36,37 @@ describe('Authenticate User Use Case', () => {
     expect(userToken.user).toHaveProperty("id");
     expect(userToken.user.email).toEqual(user.email);
   });
+
+  it('should not be able to authenticate a user when email not exists', async () => {
+    expect(async () => {
+
+      await authenticateUserUseCase.execute({
+        email: 'deal@gmail.com',
+        password: '123456789'
+      });
+
+    }).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
+  });
+
+  it('should not be able to authenticate a user when password do not match', async () => {
+    const user: ICreateUserDTO = {
+      email: 'douglas@gmail.com',
+      name: 'Douglas',
+      password: '123456789'
+    };
+
+    const newUser = await createUserUseCase.execute(user);
+
+    expect(newUser).toHaveProperty("id");
+    expect(newUser.email).toEqual(user.email);
+
+    expect(async () => {
+
+      await authenticateUserUseCase.execute({
+         email: user.email,
+         password: '123456789X'
+      });
+
+    }).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
+  })
 })
