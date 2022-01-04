@@ -44,5 +44,6 @@ describe("Create User Controller", () => {
     expect(statusCode).toBe(400);
     expect(body).toHaveProperty("message");
     expect(body.message).toEqual("User already exists");
-  })
+  });
+
 });
