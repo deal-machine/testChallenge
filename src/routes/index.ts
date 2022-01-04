@@ -7,10 +7,6 @@ import { statementRouter } from './statements.routes';
 
 const router = Router();
 
-router.get('/test', (request, response) => {
-    return response.status(200).json({message: "ok"})
-  });
-
 router.use('/', authenticationRouter);
 router.use('/users', usersRouter);
 router.use('/profile', userProfileRouter);
