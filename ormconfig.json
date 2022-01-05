@@ -19,9 +19,12 @@
   },
   {
     "name": "test",
-    "type": "sqlite",
-    "dropSchema": true,
-    "database": "fin_api_test.db",
+    "username": "postgres",
+    "password": "docker",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "database": "fin_api_test",
     "entities": [
       "./src/modules/**/entities/*.ts"
     ],
